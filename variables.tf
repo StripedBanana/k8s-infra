@@ -1,3 +1,4 @@
+# Provider
 variable "vsphere_user" {
     description = "value"
     type = string
@@ -19,5 +20,80 @@ variable "vsphere_server" {
 variable "template_name" {
     description = "value"
     type = string
+    default = null
+}
+
+# Network
+variable "dns_server" {
+    description = "value"
+    type = string
+    default = "192.168.1.1"
+}
+
+variable "network_name" {
+    description = "value"
+    type = string
+    default = null
+}
+
+# Master
+variable "vm_master_name" {
+    description = "value"
+    type = string
+    default = null
+}
+
+variable "vm_master_count" {
+    description = "number"
+    type = string
+    default = null
+}
+
+variable "vm_master_cpus" {
+    description = "number"
+    type = string
+    default = null
+}
+
+variable "vm_master_memory" {
+    description = "number"
+    type = string
+    default = null
+}
+
+variable "vm_master_ip" {
+    description = "list"
+    type = list
+    default = null
+}
+
+# Worker
+variable "vm_worker_name" {
+    description = "value"
+    type = string
+    default = null
+}
+
+variable "vm_worker_count" {
+    description = "number"
+    type = string
+    default = null
+}
+
+variable "vm_worker_cpus" {
+    description = "number"
+    type = string
+    default = null
+}
+
+variable "vm_worker_memory" {
+    description = "number"
+    type = string
+    default = null
+}
+
+variable "vm_worker_ip" {
+    description = "list"
+    type = list
     default = null
 }
