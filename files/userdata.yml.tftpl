@@ -6,3 +6,35 @@ users:
     sudo: ALL=(ALL) NOPASSWD:ALL
     groups: sudo, wheel
     shell: /bin/bash
+yum_repos:
+  # adding any number of custom yum repos in /etc/yum.repos.d/
+  # note: the yum.repos.d folder is actually also used by the new dnf CLI, so this should work for both yum and dnf based OS.
+  private-repo:
+    # non existent example (replace with real private repo url)
+    # base url can use usual system variables ($basearch instead of hard coded x86_64 for instance)
+    baseurl: http://private.repo/almalinux/8.6/BaseOS/x86_64/os
+    enabled: true
+    failovermethod: priority
+    # if set to true, provide a gpgkey as well
+    # GPG keys will probably already be present on the guest os as files in something like /etc/pki/rpm-gpg/ for default repos, not for extra ones though
+    # example: gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL
+    gpgcheck: false
+    name: Private BaseOS repository for AlmaLinux 8.6
+disk_setup:
+  # name of device in the os: this should follow terraform/vmware disks list's order (sda, sdb, sdc...)
+  # no need to touch /dev/sda as it probably already holds the guest os
+  /dev/sdb:
+    table_type: 'mbr'
+    # this will create one full partition sdb1
+    layout:
+      - 100
+fs_setup:
+  # this will format sdb1 as ext4
+  - label: logs
+    filesystem: 'ext4'
+    device: '/dev/sdb1'
+# mouting it (persistent in /etc/fstab but does not leverage lvm)
+# non existent folders will be created but own by root:root.
+# be careful when mounting over existing non-empty folders, as it will just hide the original contents which is probably not what you intend.
+mounts:
+  - ["/dev/sdb1", "/opt/data"]

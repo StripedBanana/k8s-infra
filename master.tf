@@ -29,6 +29,14 @@ resource "vsphere_virtual_machine" "vm-master" {
     thin_provisioned = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
   }
 
+  disk {
+    label            = "disk1"
+    size             = "50"
+    eagerly_scrub    = false
+    thin_provisioned = true
+    unit_number      = 1
+  }
+
   clone {
     template_uuid = data.vsphere_virtual_machine.template.id
   }
