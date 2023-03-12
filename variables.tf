@@ -43,12 +43,6 @@ variable "vm_master_name" {
     default = null
 }
 
-variable "vm_master_count" {
-    description = "number"
-    type = string
-    default = null
-}
-
 variable "vm_master_cpus" {
     description = "number"
     type = string
@@ -61,21 +55,15 @@ variable "vm_master_memory" {
     default = null
 }
 
-variable "vm_master_ip" {
-    description = "list"
-    type = list
+variable "vm_master_set" {
+    description = "map"
+    type = map
     default = null
 }
 
 # Worker
 variable "vm_worker_name" {
     description = "value"
-    type = string
-    default = null
-}
-
-variable "vm_worker_count" {
-    description = "number"
     type = string
     default = null
 }
@@ -92,8 +80,8 @@ variable "vm_worker_memory" {
     default = null
 }
 
-variable "vm_worker_ip" {
-    description = "list"
-    type = list
+variable "vm_worker_set" {
+    description = "map"
+    type = map
     default = null
 }

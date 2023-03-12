@@ -1,8 +1,8 @@
 resource "vsphere_virtual_machine" "vm-worker" {
   depends_on = [data.vsphere_network.network]
 
-  count            = var.vm_worker_count
-  name             = "${var.vm_worker_name}${count.index + 1}"
+  for_each         = var.vm_worker_set
+  name             = each.key
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
   num_cpus         = var.vm_worker_cpus
@@ -45,10 +45,10 @@ resource "vsphere_virtual_machine" "vm-worker" {
   extra_config = {
     "guestinfo.metadata" = base64encode(
       templatefile("${path.module}/files/metadata.yml.tftpl",
-        { ip       = element(var.vm_worker_ip, count.index),
+        { ip       = each.value,
           gateway  = var.dns_server,
           dns      = var.dns_server,
-          hostname = "${var.vm_worker_name}${count.index + 1}"
+          hostname = each.key
         }
       )
     )
